@@ -47,6 +47,9 @@ public class UserDetailsService {
         if(userDetails ==null){
             throw new ApiException("id not found");
         }
+        if(userDto.getIsIllness().equals(false)){
+            userDto.setIllness_type(null);
+        }
 
         userDetails.setBlood_type(userDto.getBlood_type());
         userDetails.setIsIllness(userDto.getIsIllness());
