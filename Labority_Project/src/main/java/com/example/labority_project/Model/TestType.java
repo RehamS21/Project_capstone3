@@ -26,7 +26,7 @@ public class TestType {
 
     @NotEmpty(message = "The test name must not null")
     @Size(min = 2 , max = 50)
-    @Column(columnDefinition = "varchar(50) unique not null")
+    @Column(columnDefinition = "varchar(50) not null")
     private String name;
 
     @NotEmpty(message = "The test description must not null")

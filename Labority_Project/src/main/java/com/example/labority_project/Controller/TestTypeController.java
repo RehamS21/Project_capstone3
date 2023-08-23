@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/api/v1/test")
 @RequiredArgsConstructor
@@ -45,5 +47,12 @@ public class TestTypeController {
     public ResponseEntity bookingTestTypeAppointment(@PathVariable Integer user_id , @PathVariable Integer testType_id){
         testTypeService.booking_appointment(user_id, testType_id);
         return ResponseEntity.status(200).body(new ApiResponse("The test type successfully booking"));
+    }
+
+    @PutMapping("/discount/{test_id}")
+    public ResponseEntity getNationalDayDiscount(@PathVariable Integer test_id) throws ParseException {
+        Double discount = testTypeService.nationalDay_Offer(test_id);
+
+        return ResponseEntity.status(200).body(new ApiResponse("congratulations! you get national day discount by 15%. The test price after discount = "+discount));
     }
 }

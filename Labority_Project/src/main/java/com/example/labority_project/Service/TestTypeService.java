@@ -11,6 +11,10 @@ import com.example.labority_project.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -80,6 +84,45 @@ public class TestTypeService {
 
         userRepository.save(user);
         laboartoriesRepository.save(laboratory);
+    }
+
+    public Double nationalDay_Offer(Integer testType_id) throws ParseException {
+        TestType testType = testTypeRepository.findTestTypeById(testType_id);
+
+        if (testType == null)
+            throw new ApiException("Sorry , the test id is wrong");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //national day format
+        Date nationalDate = dateFormat.parse("2023-09-23");
+
+        // remove the portion of hours, min, seconds,
+        Date testDate = getZeroTimeDate(testType.getTest_date());
+
+        if (nationalDate.compareTo(testDate) != 0)
+            throw new ApiException("Sorry, can't get a discount because the test date is not equal to national day");
+
+
+        Double discount = testType.getPrice() - (testType.getPrice() * 0.15);
+
+        if (discount < 0)
+            throw new ApiException("Sorry the discount wrong");
+
+        testType.setPrice(discount);
+        testTypeRepository.save(testType);
+
+        return discount;
+    }
+
+    private static Date getZeroTimeDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        date = calendar.getTime();
+        return date;
     }
 
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public class LaboartoriesService {
     private final LaboartoriesRepository laboartoriesRepository;
     private final TestTypeRepository testTypeRepository;
-//    private final UserRepository userRepository;
 
     public List<Laboratories> getAllLaboratory(){
         return laboartoriesRepository.findAll();
@@ -53,10 +52,5 @@ public class LaboartoriesService {
 
         laboartoriesRepository.deleteAllByIdInBatch(Collections.singleton(id));
     }
-
-
-
-
-
 
 }
