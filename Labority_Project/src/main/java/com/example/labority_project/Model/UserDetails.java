@@ -23,9 +23,6 @@ public class UserDetails {
     @Column(columnDefinition="varchar(20) not null check(blood_type='+O' or blood_type='-O' or blood_type='+A' or blood_type='-A' or blood_type='+B' or blood_type='-B' or  blood_type='+AB' or blood_type='-AB')")
     private String blood_type;
 
-    @NotNull
-    @Column(name = "pregnantOrNot", columnDefinition = "boolean default false")
-    private Boolean pregnantOrNot;
     //depending on the gender
 
     @NotNull

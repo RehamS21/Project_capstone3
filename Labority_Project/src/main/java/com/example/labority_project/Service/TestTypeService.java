@@ -2,6 +2,7 @@ package com.example.labority_project.Service;
 
 import com.example.labority_project.Api.ApiException;
 import com.example.labority_project.Model.Laboratories;
+import com.example.labority_project.Model.Orders;
 import com.example.labority_project.Model.TestType;
 import com.example.labority_project.Model.User;
 import com.example.labority_project.Repository.LaboartoriesRepository;
@@ -80,4 +81,5 @@ public class TestTypeService {
         userRepository.save(user);
         laboartoriesRepository.save(laboratory);
     }
+
 }

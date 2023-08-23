@@ -27,15 +27,12 @@ public class UserDetailsService {
             throw new ApiException("id is null");
         }
 
-        if (Objects.equals(user.getGender(), "m")) {
-            userDto.setPregnantOrNot(false);
-        }
 
         if(userDto.getIsIllness().equals(false)){
             userDto.setIllness_type(null);
         }
 
-        UserDetails userDetails =new UserDetails(null, userDto.getBlood_type(),userDto.getPregnantOrNot(),userDto.getIsIllness(),userDto.getIllness_type(),user);
+        UserDetails userDetails =new UserDetails(null, userDto.getBlood_type(),userDto.getIsIllness(),userDto.getIllness_type(),user);
         userDetailsRepository.save(userDetails);
     }
 
@@ -52,7 +49,6 @@ public class UserDetailsService {
         }
 
         userDetails.setBlood_type(userDto.getBlood_type());
-        userDetails.setPregnantOrNot(userDto.getPregnantOrNot());
         userDetails.setIsIllness(userDto.getIsIllness());
         userDetails.setIllness_type(userDto.getIllness_type());
         userDetailsRepository.save(userDetails);

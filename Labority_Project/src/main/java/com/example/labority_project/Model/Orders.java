@@ -24,22 +24,28 @@ public class Orders {
     private Integer id;
 
     @NotEmpty
-    @Column(columnDefinition = "varchar(15) not null  check(order_status='confirmed' or order_status='processing')")
+    @Column(columnDefinition = "varchar(15) not null default 'processing' check(order_status='confirmed' or order_status='processing')")
     private String order_status;
 
-    @NotNull
-    @Column(columnDefinition = "datetime not null")
-    private Date date;
+    @NotEmpty
+    @Column(columnDefinition = "varchar(20) not null ")
+    private  String lab_name;
+
+
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
-    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "testType_id" , referencedColumnName = "id")
+    @JsonIgnore
     private TestType testType;
 
+    @OneToOne(cascade =CascadeType.ALL,mappedBy = "orders")
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
+    private Report report;
 }
 
 

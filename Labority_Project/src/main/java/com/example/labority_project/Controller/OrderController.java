@@ -21,12 +21,11 @@ public class OrderController {
         return ResponseEntity.status(200).body(orderService.getAllOrders());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addOrder(@RequestBody @Valid Orders orders){
-        orderService.addOrder(orders);
+    @PostMapping("/add/{user_id}")
+    public ResponseEntity addOrder(@PathVariable Integer user_id, @RequestBody @Valid Orders orders){
+        orderService.addOrder(user_id,orders);
         return ResponseEntity.status(200).body(new ApiResponse("Order Added"));
     }
-
 
     @PutMapping("/update/{id}")
     public ResponseEntity updateOrder(@PathVariable Integer id,@RequestBody @Valid Orders orders){
@@ -40,17 +39,22 @@ public class OrderController {
         return ResponseEntity.status(200).body(new ApiResponse("Order Deleted"));
     }
 
-    @PutMapping("/{user_id}/assign/{order_id}")
-    public ResponseEntity assignOrderToUser(@PathVariable Integer user_id,@PathVariable Integer order_id){
-        orderService.assignOrderToUser(user_id,order_id);
-        return ResponseEntity.status(200).body(new ApiResponse("Order Is Assigned To User"));
-
-    }
 
     @GetMapping("/orderbyid/{user_id}/{order_id}")
     public ResponseEntity getorderbyuserId(@PathVariable Integer user_id,@PathVariable Integer order_id){
         return ResponseEntity.status(200).body(orderService.getOrderById(user_id,order_id));
     }
 
+    @GetMapping("/calc/{order_id}")
+    public ResponseEntity calculateOrder(@PathVariable Integer order_id){
+        Double result = orderService.calculateTestPrice(order_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The payment completed successfully, Your order confirmed.The user balance after payment =  "+result));
+    }
+
+    @PutMapping("/unbook/{order_id}")
+    public ResponseEntity cancelBookingTestTypeAppointment(@PathVariable Integer order_id){
+        orderService.cancle_appointment(order_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The Appointment successfully unbooked"));
+    }
 
 }
