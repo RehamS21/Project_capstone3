@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.xml.transform.Result;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestControllerAdvice
@@ -79,5 +80,10 @@ public class ControllerAdvice {
     public ResponseEntity<ApiResponse> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(new ApiResponse(msg));
+    }
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResponseEntity NullPointerException(NullPointerException e){
+        String message = e.getMessage();
+        return ResponseEntity.status(400).body(new ApiResponse(message));
     }
 }
